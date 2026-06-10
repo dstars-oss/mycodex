@@ -11,12 +11,13 @@ use clap::{Args, Parser, Subcommand};
 const DEFAULT_PACKAGE_NAME: &str = "OpenAI.Codex";
 const DEFAULT_PROXY: &str = "http://127.0.0.1:7897";
 const DEFAULT_NO_PROXY: &str = "localhost,127.0.0.1,::1";
-const APP_DISPLAY_NAME: &str = "Codex++";
-const INSTALLED_EXE_NAME: &str = "Codex++.exe";
-const START_MENU_SHORTCUT_NAME: &str = "Codex++.lnk";
+const APP_DISPLAY_NAME: &str = "CodexLaunch";
+const INSTALLED_EXE_NAME: &str = "CodexLaunch.exe";
+const START_MENU_SHORTCUT_NAME: &str = "CodexLaunch.lnk";
+const LEGACY_START_MENU_SHORTCUT_NAME: &str = "Codex++.lnk";
 
 #[derive(Debug, Parser)]
-#[command(name = "Codex++", bin_name = "Codex++", version, about)]
+#[command(name = "CodexLaunch", bin_name = "CodexLaunch", version, about)]
 struct Cli {
     #[command(subcommand)]
     command: Option<Command>,
@@ -26,7 +27,7 @@ struct Cli {
 enum Command {
     /// Launch the Microsoft Store Codex app with proxy arguments and proxy env.
     Launch(LaunchOptions),
-    /// Install Codex++ into the current user profile and create a Start Menu shortcut.
+    /// Install CodexLaunch into the current user profile and create a Start Menu shortcut.
     Install(InstallOptions),
 }
 
@@ -218,6 +219,7 @@ fn install(options: InstallOptions) -> Result<()> {
 
     create_start_menu_shortcut(&shortcut_path, &target_exe, &install_dir, &icon_path)?;
     println!("Installed {APP_DISPLAY_NAME} Start Menu shortcut.");
+    remove_legacy_start_menu_shortcut()?;
 
     Ok(())
 }
@@ -677,6 +679,34 @@ fn default_start_menu_shortcut_path() -> Result<PathBuf> {
         .join(START_MENU_SHORTCUT_NAME))
 }
 
+fn legacy_start_menu_shortcut_path() -> Result<PathBuf> {
+    let app_data = env::var_os("APPDATA").context("APPDATA is not set")?;
+    Ok(PathBuf::from(app_data)
+        .join("Microsoft")
+        .join("Windows")
+        .join("Start Menu")
+        .join("Programs")
+        .join(LEGACY_START_MENU_SHORTCUT_NAME))
+}
+
+fn remove_legacy_start_menu_shortcut() -> Result<()> {
+    let legacy_shortcut = legacy_start_menu_shortcut_path()?;
+    if legacy_shortcut.exists() {
+        fs::remove_file(&legacy_shortcut).with_context(|| {
+            format!(
+                "failed to remove legacy Start Menu shortcut {}",
+                legacy_shortcut.display()
+            )
+        })?;
+        println!(
+            "Removed legacy Start Menu shortcut {}.",
+            legacy_shortcut.display()
+        );
+    }
+
+    Ok(())
+}
+
 fn same_file_path(left: &Path, right: &Path) -> bool {
     let Ok(left) = left.canonicalize() else {
         return false;
@@ -886,8 +916,8 @@ mod tests {
     #[test]
     fn quotes_powershell_strings() {
         assert_eq!(
-            quote_powershell_string(r"C:\Users\O'Brien\Codex++.lnk"),
-            r#"'C:\Users\O''Brien\Codex++.lnk'"#
+            quote_powershell_string(r"C:\Users\O'Brien\CodexLaunch.lnk"),
+            r#"'C:\Users\O''Brien\CodexLaunch.lnk'"#
         );
     }
 
