@@ -11,13 +11,13 @@ use clap::{Args, Parser, Subcommand};
 const DEFAULT_PACKAGE_NAME: &str = "OpenAI.Codex";
 const DEFAULT_PROXY: &str = "http://127.0.0.1:7897";
 const DEFAULT_NO_PROXY: &str = "localhost,127.0.0.1,::1";
-const APP_DISPLAY_NAME: &str = "CodexLaunch";
-const INSTALLED_EXE_NAME: &str = "CodexLaunch.exe";
-const START_MENU_SHORTCUT_NAME: &str = "CodexLaunch.lnk";
+const APP_DISPLAY_NAME: &str = "MyCodex";
+const INSTALLED_EXE_NAME: &str = "MyCodex.exe";
+const START_MENU_SHORTCUT_NAME: &str = "MyCodex.lnk";
 const LEGACY_START_MENU_SHORTCUT_NAME: &str = "Codex++.lnk";
 
 #[derive(Debug, Parser)]
-#[command(name = "CodexLaunch", bin_name = "CodexLaunch", version, about)]
+#[command(name = "MyCodex", bin_name = "MyCodex", version, about)]
 struct Cli {
     #[command(subcommand)]
     command: Option<Command>,
@@ -27,7 +27,7 @@ struct Cli {
 enum Command {
     /// Launch the Microsoft Store Codex app with proxy arguments and proxy env.
     Launch(LaunchOptions),
-    /// Install CodexLaunch into the current user profile and create a Start Menu shortcut.
+    /// Install MyCodex into the current user profile and create a Start Menu shortcut.
     Install(InstallOptions),
 }
 
@@ -916,8 +916,8 @@ mod tests {
     #[test]
     fn quotes_powershell_strings() {
         assert_eq!(
-            quote_powershell_string(r"C:\Users\O'Brien\CodexLaunch.lnk"),
-            r#"'C:\Users\O''Brien\CodexLaunch.lnk'"#
+            quote_powershell_string(r"C:\Users\O'Brien\MyCodex.lnk"),
+            r#"'C:\Users\O''Brien\MyCodex.lnk'"#
         );
     }
 

@@ -2,7 +2,7 @@
 
 ## Project
 
-CodexLaunch is a standalone Windows launcher for the Microsoft Store Codex app. It is not a Codex
+MyCodex is a standalone Windows launcher for the Microsoft Store Codex app. It is not a Codex
 plugin package.
 
 The current verified goal is to start Store Codex with a local proxy without enabling the global
@@ -91,13 +91,13 @@ proxy environment variables.
 `install` copies the running executable into the current user's local app data directory:
 
 ```text
-%LOCALAPPDATA%\CodexLaunch\CodexLaunch.exe
+%LOCALAPPDATA%\MyCodex\MyCodex.exe
 ```
 
 It then creates or refreshes this current-user Start Menu shortcut:
 
 ```text
-%APPDATA%\Microsoft\Windows\Start Menu\Programs\CodexLaunch.lnk
+%APPDATA%\Microsoft\Windows\Start Menu\Programs\MyCodex.lnk
 ```
 
 The shortcut target is the installed launcher, its arguments are:
@@ -114,5 +114,5 @@ Codex path lookup:
 ```
 
 The install command supports overwrite installation. If the launcher is already running from
-`%LOCALAPPDATA%\CodexLaunch\CodexLaunch.exe`, skip self-copy and still refresh the shortcut. It also
+`%LOCALAPPDATA%\MyCodex\MyCodex.exe`, skip self-copy and still refresh the shortcut. It also
 removes the legacy `%APPDATA%\Microsoft\Windows\Start Menu\Programs\Codex++.lnk` shortcut if present.

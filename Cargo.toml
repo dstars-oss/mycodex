@@ -1,5 +1,5 @@
 [package]
-name = "codexlaunch"
+name = "mycodex"
 version = "0.1.0"
 edition = "2024"
 description = "Local proxy launcher MVP for the Microsoft Store Codex app."

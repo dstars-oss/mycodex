@@ -1,6 +1,6 @@
-# CodexLaunch
+# MyCodex
 
-CodexLaunch is an MVP launcher for the Microsoft Store Codex app on Windows. It starts the packaged
+MyCodex is an MVP launcher for the Microsoft Store Codex app on Windows. It starts the packaged
 Codex app with Chromium proxy flags and per-process proxy environment variables.
 
 ## Scope
@@ -30,22 +30,22 @@ cargo build --release
 Install for the current user:
 
 ```powershell
-.\target\release\codexlaunch.exe install
+.\target\release\mycodex.exe install
 ```
 
 This copies the running executable to:
 
 ```text
-%LOCALAPPDATA%\CodexLaunch\CodexLaunch.exe
+%LOCALAPPDATA%\MyCodex\MyCodex.exe
 ```
 
 It also creates a current-user Start Menu shortcut:
 
 ```text
-%APPDATA%\Microsoft\Windows\Start Menu\Programs\CodexLaunch.lnk
+%APPDATA%\Microsoft\Windows\Start Menu\Programs\MyCodex.lnk
 ```
 
-The shortcut launches `CodexLaunch.exe launch` and uses the Microsoft Store `app\Codex.exe` icon.
+The shortcut launches `MyCodex.exe launch` and uses the Microsoft Store `app\Codex.exe` icon.
 Running `install` again overwrites the installed executable, refreshes the shortcut, and removes the
 legacy `Codex++.lnk` shortcut if present.
 
@@ -109,7 +109,7 @@ cargo run -- launch --allow-existing-instance
 After installation, the installed launcher can be run directly:
 
 ```powershell
-%LOCALAPPDATA%\CodexLaunch\CodexLaunch.exe launch
+%LOCALAPPDATA%\MyCodex\MyCodex.exe launch
 ```
 
 ## Current Limitations
